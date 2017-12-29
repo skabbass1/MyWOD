@@ -11,10 +11,10 @@ import Alamofire
 
 public final class ScheduleRequest {
     
-    public static func get(forDate: Date) {
+    public static func get(forDate: Date, responseHandler: @escaping (DataResponse<String>) -> Void) {
         
-        Alamofire.request(getResourceURLForDate(forDate: forDate))
-            .responseString{ response  in  print(String(data:response.data!, encoding: .utf8))}
+        Alamofire.request(getResourceURLForDate(forDate: forDate)).responseString(completionHandler:responseHandler)
+        
     }
     
     public static func getResourceURLForDate(forDate: Date) -> String {

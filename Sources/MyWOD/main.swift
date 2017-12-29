@@ -4,6 +4,6 @@ import Foundation
 import MyWODCore
 
 
-print(ScheduleRequest.get(forDate: Date()))
+ScheduleRequest.get(forDate: Date()){response in print(response.result)}
 
 RunLoop.main.run(until: Date(timeIntervalSinceNow: 5))
