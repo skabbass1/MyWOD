@@ -14,9 +14,7 @@ class UtilsSpec: QuickSpec {
     override func spec() {
         it("Returns correct resource URL for given date") {
             let expected = "http://www.crossfitdefined.com/thursday-december-28th-2017/"
-            let formatter = DateFormatter()
-            formatter.dateFormat = "yyyyMMdd"
-            let date = formatter.date(from: "20171228")
+            let date = Utils.stringToDate(from:"20171228", format: "yyyyMMdd")
             let got = ScheduleRequest.getResourceURLForDate(forDate: date!)
             expect(got).to(equal(expected))
             

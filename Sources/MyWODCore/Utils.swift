@@ -8,7 +8,7 @@
 import Foundation
 
 public final class Utils {
-    static func getMonthDayOrdinalSufix(forDay:Int) -> String {
+    public static func getMonthDayOrdinalSufix(forDay:Int) -> String {
         switch (forDay){
             
         case 1, 21, 31:
@@ -23,5 +23,11 @@ public final class Utils {
         default:
             return "th"
         }
+    }
+    
+    public static func stringToDate(from dateString: String, format: String) -> Date? {
+        let formatter = DateFormatter()
+        formatter.dateFormat = format
+        return formatter.date(from: dateString)
     }
 }
