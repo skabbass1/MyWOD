@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import SwiftSMTP
+
 
 public final class Cli {
    
@@ -25,15 +27,33 @@ public final class Cli {
         ScheduleRequest.get(forDate: forDate!){response in
             if response.response?.statusCode == 200 {
             let wod = Parser.extractWOD(rawHtml: String(data:response.data!, encoding:.utf8)!)
-            print(wod)
+            sendText(messageBody: wod)
             }
+            
             else {
-                print(
-                "Unable to get WOD for \(String(describing: forDate)). Request returned status code \(String(describing:response.response?.statusCode))"
-                )
+                
+                let message = "Unable to get WOD for \(String(describing: forDate)). Request returned status code \(String(describing:response.response?.statusCode))"
+                sendText(messageBody: message)
             }
         }
         
         RunLoop.main.run(until: Date(timeIntervalSinceNow: 5))
+    }
+    
+    static func sendText(messageBody: String) {
+        let smtpHost = ProcessInfo.processInfo.environment["MYWOD_SMTP_HOST"]
+        let loginEmail = ProcessInfo.processInfo.environment["MYWOD_LOGIN_EMAIL"]
+        let loginPassword = ProcessInfo.processInfo.environment["MYWOD_LOGIN_PASSWORD"]
+        let recipientEmail = ProcessInfo.processInfo.environment["MYWOD_RECIPIENT_EMAIL"]
+        let user = ProcessInfo.processInfo.environment["USER"]
+        
+        let smtp = SMTP(hostname: smtpHost!, email: loginEmail!,  password: loginPassword!)
+        let mail = Mail(
+            from: User(name:user!, email: loginEmail!),
+            to: [User(name: user!, email: recipientEmail!)],
+            text: messageBody
+        )
+         smtp.send(mail)
+        
     }
 }

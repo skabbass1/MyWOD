@@ -11,6 +11,33 @@
         }
       },
       {
+        "package": "CommonCrypto",
+        "repositoryURL": "https://github.com/IBM-Swift/CommonCrypto.git",
+        "state": {
+          "branch": null,
+          "revision": "9156d238dbc4c15455b77b45e721b2bb0b995e31",
+          "version": "0.1.5"
+        }
+      },
+      {
+        "package": "Cryptor",
+        "repositoryURL": "https://github.com/IBM-Swift/BlueCryptor.git",
+        "state": {
+          "branch": null,
+          "revision": "1de800d80f22a930e617f7c551a692475f92a23d",
+          "version": "0.8.22"
+        }
+      },
+      {
+        "package": "LoggerAPI",
+        "repositoryURL": "https://github.com/IBM-Swift/LoggerAPI.git",
+        "state": {
+          "branch": null,
+          "revision": "6b62fe66da9b8794d6581e5c341710eea3173cd4",
+          "version": "1.7.1"
+        }
+      },
+      {
         "package": "Nimble",
         "repositoryURL": "https://github.com/Quick/Nimble.git",
         "state": {
@@ -26,6 +53,33 @@
           "branch": null,
           "revision": "0ff81f2c665b4381f526bd656f8708dd52a9ea2f",
           "version": "1.2.0"
+        }
+      },
+      {
+        "package": "SSLService",
+        "repositoryURL": "https://github.com/IBM-Swift/BlueSSLService.git",
+        "state": {
+          "branch": null,
+          "revision": "d657234966e61ec3d9e9c2edec2be0c03cae6e99",
+          "version": "0.12.68"
+        }
+      },
+      {
+        "package": "Socket",
+        "repositoryURL": "https://github.com/IBM-Swift/BlueSocket.git",
+        "state": {
+          "branch": null,
+          "revision": "ebd0fd8372c73fd467a447f80f2763d34f3dbe9c",
+          "version": "0.12.79"
+        }
+      },
+      {
+        "package": "SwiftSMTP",
+        "repositoryURL": "https://github.com/IBM-Swift/Swift-SMTP.git",
+        "state": {
+          "branch": null,
+          "revision": "cd0e6d89f8c2ab8ccaa19f447afd2438b14dca69",
+          "version": "1.1.3"
         }
       }
     ]
