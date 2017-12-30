@@ -27,20 +27,20 @@ public final class Cli {
         ScheduleRequest.get(forDate: forDate!){response in
             if response.response?.statusCode == 200 {
             let wod = Parser.extractWOD(rawHtml: String(data:response.data!, encoding:.utf8)!)
-            sendText(messageBody: wod)
+                sendText(messageBody: Utils.plainTextToHtml(from:wod))
             }
             
             else {
                 
                 let message = "Unable to get WOD for \(String(describing: forDate)). Request returned status code \(String(describing:response.response?.statusCode))"
-                sendText(messageBody: message)
+                sendText(messageBody: message, subject: "ERROR")
             }
         }
         
         RunLoop.main.run(until: Date(timeIntervalSinceNow: 5))
     }
     
-    static func sendText(messageBody: String) {
+    static func sendText(messageBody: String, subject: String = "WOD") {
         let smtpHost = ProcessInfo.processInfo.environment["MYWOD_SMTP_HOST"]
         let loginEmail = ProcessInfo.processInfo.environment["MYWOD_LOGIN_EMAIL"]
         let loginPassword = ProcessInfo.processInfo.environment["MYWOD_LOGIN_PASSWORD"]
@@ -51,6 +51,7 @@ public final class Cli {
         let mail = Mail(
             from: User(name:user!, email: loginEmail!),
             to: [User(name: user!, email: recipientEmail!)],
+            subject: subject,
             text: messageBody
         )
          smtp.send(mail)

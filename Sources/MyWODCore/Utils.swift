@@ -30,4 +30,12 @@ public final class Utils {
         formatter.dateFormat = format
         return formatter.date(from: dateString)
     }
+    
+    public static func plainTextToHtml(from plainText: String) -> String {
+        return plainText
+            .split(separator: "\n")
+            .map{"<p>\($0)</p>"}
+            .joined()
+        
+    }
 }
