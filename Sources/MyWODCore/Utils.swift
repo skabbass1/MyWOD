@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftSMTP
 
 public final class Utils {
     public static func getMonthDayOrdinalSufix(forDay:Int) -> String {
@@ -36,6 +37,24 @@ public final class Utils {
             .split(separator: "\n")
             .map{"<p>\($0)</p>"}
             .joined()
+        
+    }
+    
+    public static func sendText(messageBody: String, subject: String = "WOD") {
+        let smtpHost = ProcessInfo.processInfo.environment["MYWOD_SMTP_HOST"]
+        let loginEmail = ProcessInfo.processInfo.environment["MYWOD_LOGIN_EMAIL"]
+        let loginPassword = ProcessInfo.processInfo.environment["MYWOD_LOGIN_PASSWORD"]
+        let recipientEmail = ProcessInfo.processInfo.environment["MYWOD_RECIPIENT_EMAIL"]
+        let user = ProcessInfo.processInfo.environment["USER"]
+        
+        let smtp = SMTP(hostname: smtpHost!, email: loginEmail!,  password: loginPassword!)
+        let mail = Mail(
+            from: User(name:user!, email: loginEmail!),
+            to: [User(name: user!, email: recipientEmail!)],
+            subject: subject,
+            text: messageBody
+        )
+        smtp.send(mail)
         
     }
 }

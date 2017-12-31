@@ -13,7 +13,10 @@ public final class ScheduleRequest {
     
     public static func get(forDate: Date, responseHandler: @escaping (DataResponse<String>) -> Void) {
         
-        Alamofire.request(getResourceURLForDate(forDate: forDate)).responseString(completionHandler:responseHandler)
+        Alamofire.request(getResourceURLForDate(forDate: forDate)).responseString(
+            queue: DispatchQueue.global(qos: .background),
+            completionHandler:responseHandler
+        )
         
     }
     
