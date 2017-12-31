@@ -7,7 +7,6 @@ let package = Package(
     name: "MyWOD",
     dependencies: [
         // Dependencies declare other packages that this package depends on.
-        .package(url: "https://github.com/Alamofire/Alamofire.git", from: "4.0.0"),
         .package(url: "https://github.com/Quick/Quick.git", from: "1.2.0"),
         .package(url: "https://github.com/Quick/Nimble.git", from: "7.0.3"),
         .package(url: "https://github.com/IBM-Swift/Swift-SMTP.git", from: "1.1.3"),
@@ -24,7 +23,7 @@ let package = Package(
             dependencies: ["MyWODCore", "Kitura", "HeliumLogger"]),
         .target(
             name: "MyWODCore",
-            dependencies: ["Alamofire", "SwiftSMTP", "Kitura", "CloudEnvironment", "Health"]),
+            dependencies: ["SwiftSMTP", "Kitura", "CloudEnvironment", "Health"]),
         .testTarget(
             name: "MyWODTests",
         dependencies: ["MyWODCore","Quick", "Nimble"]

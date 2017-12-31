@@ -6,17 +6,17 @@
 //
 
 import Foundation
-import Alamofire
 
 
 public final class ScheduleRequest {
     
-    public static func get(forDate: Date, responseHandler: @escaping (DataResponse<String>) -> Void) {
-        
-        Alamofire.request(getResourceURLForDate(forDate: forDate)).responseString(
-            queue: DispatchQueue.global(qos: .background),
-            completionHandler:responseHandler
-        )
+    public static func get(forDate: Date, responseHandler: @escaping (Data?, URLResponse?, Error?) -> Void) {
+        let urlString = URL(string: getResourceURLForDate(forDate: forDate))
+        if let url = urlString {
+            let task = URLSession.shared.dataTask(with: url, completionHandler: responseHandler)
+            task.resume()
+            
+        }
         
     }
     

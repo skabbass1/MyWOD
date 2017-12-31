@@ -54,18 +54,20 @@ public final class Controller {
     
     func WOD(forDate: Date?) {
         let queryDate = forDate == nil ? Calendar.current.date(byAdding: .day, value: 1, to: Date()): forDate
-        ScheduleRequest.get(forDate: queryDate!){response in
-            if response.response?.statusCode == 200 {
-                let wod = Parser.extractWOD(rawHtml: String(data:response.data!, encoding:.utf8)!)
+        ScheduleRequest.get(forDate: queryDate!){ (data, response, error) in
+            
+            let httpResponse = response as? HTTPURLResponse
+            if httpResponse?.statusCode == 200 {
+                let wod = Parser.extractWOD(rawHtml: String(data:data!, encoding:.utf8)!)
                 Log.debug("WOD - \(wod)")
-                Utils.sendText(messageBody: Utils.plainTextToHtml(from:wod))
+                //Utils.sendText(messageBody: Utils.plainTextToHtml(from:wod))
             }
                 
             else {
                 
-                let message = "Unable to get WOD for \(String(describing: forDate)). Request returned status code \(String(describing:response.response?.statusCode))"
+                let message = "Unable to get WOD for \(String(describing: forDate)). Request returned status code \(String(describing:httpResponse?.statusCode))"
                 Log.error("WOD - \(message)")
-                Utils.sendText(messageBody: message, subject: "ERROR")
+                //Utils.sendText(messageBody: message, subject: "ERROR")
             }
         }
     }

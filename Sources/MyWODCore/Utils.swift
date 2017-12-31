@@ -54,7 +54,11 @@ public final class Utils {
             subject: subject,
             text: messageBody
         )
-        smtp.send(mail)
+        smtp.send(mail) { (error) in
+            if let error = error {
+                print(error)
+            }
+        }
         
     }
 }
