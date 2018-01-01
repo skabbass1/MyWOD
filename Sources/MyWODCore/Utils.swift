@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import SwiftSMTP
+
 
 public final class Utils {
     public static func getMonthDayOrdinalSufix(forDay:Int) -> String {
@@ -41,24 +41,68 @@ public final class Utils {
     }
     
     public static func sendText(messageBody: String, subject: String = "WOD") {
-        let smtpHost = ProcessInfo.processInfo.environment["MYWOD_SMTP_HOST"]
-        let loginEmail = ProcessInfo.processInfo.environment["MYWOD_LOGIN_EMAIL"]
-        let loginPassword = ProcessInfo.processInfo.environment["MYWOD_LOGIN_PASSWORD"]
-        let recipientEmail = ProcessInfo.processInfo.environment["MYWOD_RECIPIENT_EMAIL"]
-        let user = ProcessInfo.processInfo.environment["USER"]
+       
+        var request = URLRequest(url: URL(string:ProcessInfo.processInfo.environment["MAILGUN_URL"]!)!)
+
+        let loginData = String(
+            format: "%@:%@",
+            "api",
+            ProcessInfo.processInfo.environment["MAILGUN_API_KEY"]!)
+            .data(using: String.Encoding.utf8)!
         
-        let smtp = SMTP(hostname: smtpHost!, email: loginEmail!,  password: loginPassword!)
-        let mail = Mail(
-            from: User(name:user!, email: loginEmail!),
-            to: [User(name: user!, email: recipientEmail!)],
-            subject: subject,
-            text: messageBody
+        let base64LoginData = loginData.base64EncodedString()
+        request.setValue("Basic \(base64LoginData)", forHTTPHeaderField: "Authorization")
+        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        request.httpMethod = "POST"
+        
+        let body = constructUrlEncodedFormBody(
+            from: [
+                "from" : ProcessInfo.processInfo.environment["MAILGUN_FROM"]!,
+                "to": ProcessInfo.processInfo.environment["MAILGUN_RECIPIENT_EMAIL"]!,
+                "subject": "WOD",
+                "text": messageBody
+            ]
         )
-        smtp.send(mail) { (error) in
-            if let error = error {
-                print(error)
-            }
-        }
         
+        request.httpBody = body.data(using: .utf8)
+
+
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            guard let data = data, error == nil else {                                                 // check for fundamental networking error
+                print("error=\(error)")
+                return
+            }
+
+            if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode != 200 {           // check for http errors
+                print("statusCode should be 200, but is \(httpStatus.statusCode)")
+                print("response = \(response)")
+            }
+
+            let responseString = String(data: data, encoding: .utf8)
+            print("responseString = \(responseString)")
+        }
+        task.resume()
+        
+    }
+    
+    public static func constructUrlEncodedFormBody(from keyValue: [String:String]) -> String {
+    
+        let escapeTheseCharacters = "$&+,/:;=?@ "
+        var encodedKeyValues = [String: String]()
+        for (key, value) in keyValue {
+            var dontEscapeTheseCharacters = ""
+            for scalar in value.unicodeScalars {
+                if scalar.isASCII {
+                    let stringValue = String(scalar)
+                    if !escapeTheseCharacters.contains(stringValue){
+                        dontEscapeTheseCharacters.append(stringValue)
+                    }
+                }
+            }
+            encodedKeyValues[key] = value.addingPercentEncoding(withAllowedCharacters: CharacterSet(charactersIn: dontEscapeTheseCharacters))!
+        }
+       
+        
+        return encodedKeyValues.map{"\($0)=\($1)"}.joined(separator: "&").replacingOccurrences(of: "%20", with: "+")
     }
 }

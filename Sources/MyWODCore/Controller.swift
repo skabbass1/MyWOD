@@ -61,13 +61,14 @@ public final class Controller {
                 let wod = Parser.extractWOD(rawHtml: String(data:data!, encoding:.utf8)!)
                 Log.debug("WOD - \(wod)")
                 //Utils.sendText(messageBody: Utils.plainTextToHtml(from:wod))
+                Utils.sendText(messageBody: wod)
             }
                 
             else {
                 
                 let message = "Unable to get WOD for \(String(describing: forDate)). Request returned status code \(String(describing:httpResponse?.statusCode))"
                 Log.error("WOD - \(message)")
-                //Utils.sendText(messageBody: message, subject: "ERROR")
+                Utils.sendText(messageBody: message, subject: "ERROR")
             }
         }
     }

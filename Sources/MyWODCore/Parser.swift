@@ -8,7 +8,7 @@ public final class Parser {
         var post = extractPost(rawHtml: rawHtml)
         post = removeAnnouncements(postLines: post)!
         post = removePhotos(postLines: post)
-        return extractWODDetails(postLines: post).joined(separator:"\n")
+        return extractWODDetails(postLines: post).joined(separator:"\n\n")
       
     }
     
