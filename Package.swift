@@ -9,7 +9,6 @@ let package = Package(
         // Dependencies declare other packages that this package depends on.
         .package(url: "https://github.com/Quick/Quick.git", from: "1.2.0"),
         .package(url: "https://github.com/Quick/Nimble.git", from: "7.0.3"),
-        .package(url: "https://github.com/IBM-Swift/Swift-SMTP.git", from: "1.1.3"),
         .package(url: "https://github.com/IBM-Swift/Kitura.git", .upToNextMinor(from: "2.1.0")),
         .package(url: "https://github.com/IBM-Swift/HeliumLogger.git", .upToNextMajor(from: "1.7.1")),
         .package(url: "https://github.com/IBM-Swift/CloudEnvironment.git", .upToNextMajor(from: "6.0.0")),
