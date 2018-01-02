@@ -63,9 +63,12 @@ public final class Utils {
         request.httpBody = body.data(using: .utf8)
 
 
-        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+        let sessionConfiguration = URLSessionConfiguration.default
+        let urlSession = URLSession(configuration:sessionConfiguration, delegate: nil, delegateQueue: nil)
+        
+        let task = urlSession.dataTask(with: request) { data, response, error in
             guard let data = data, error == nil else {                                                 // check for fundamental networking error
-                print("error=\(error)")
+                print("error=\(error?.localizedDescription)")
                 return
             }
 
