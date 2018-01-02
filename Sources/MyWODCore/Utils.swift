@@ -44,11 +44,7 @@ public final class Utils {
        
         var request = URLRequest(url: URL(string:ProcessInfo.processInfo.environment["MAILGUN_URL"]!)!)
 
-        let loginData = String(
-            format: "%@:%@",
-            "api",
-            ProcessInfo.processInfo.environment["MAILGUN_API_KEY"]!)
-            .data(using: String.Encoding.utf8)!
+        let loginData = "api:\(ProcessInfo.processInfo.environment["MAILGUN_API_KEY"]!)".data(using: .utf8)!
         
         let base64LoginData = loginData.base64EncodedString()
         request.setValue("Basic \(base64LoginData)", forHTTPHeaderField: "Authorization")
