@@ -22,7 +22,7 @@ let package = Package(
             dependencies: ["MyWODCore", "Kitura", "HeliumLogger"]),
         .target(
             name: "MyWODCore",
-            dependencies: ["SwiftSMTP", "Kitura", "CloudEnvironment", "Health"]),
+            dependencies: ["Kitura", "CloudEnvironment", "Health"]),
         .testTarget(
             name: "MyWODTests",
         dependencies: ["MyWODCore","Quick", "Nimble"]

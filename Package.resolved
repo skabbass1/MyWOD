@@ -29,30 +29,12 @@
         }
       },
       {
-        "package": "CommonCrypto",
-        "repositoryURL": "https://github.com/IBM-Swift/CommonCrypto.git",
-        "state": {
-          "branch": null,
-          "revision": "9156d238dbc4c15455b77b45e721b2bb0b995e31",
-          "version": "0.1.5"
-        }
-      },
-      {
         "package": "Configuration",
         "repositoryURL": "https://github.com/IBM-Swift/Configuration.git",
         "state": {
           "branch": null,
           "revision": "5a295cffa7083ab6f30cc75de373b729f61a3e7c",
           "version": "3.0.0"
-        }
-      },
-      {
-        "package": "Cryptor",
-        "repositoryURL": "https://github.com/IBM-Swift/BlueCryptor.git",
-        "state": {
-          "branch": null,
-          "revision": "1de800d80f22a930e617f7c551a692475f92a23d",
-          "version": "0.8.22"
         }
       },
       {
@@ -161,15 +143,6 @@
           "branch": null,
           "revision": "ebd0fd8372c73fd467a447f80f2763d34f3dbe9c",
           "version": "0.12.79"
-        }
-      },
-      {
-        "package": "SwiftSMTP",
-        "repositoryURL": "https://github.com/IBM-Swift/Swift-SMTP.git",
-        "state": {
-          "branch": null,
-          "revision": "cd0e6d89f8c2ab8ccaa19f447afd2438b14dca69",
-          "version": "1.1.3"
         }
       }
     ]
